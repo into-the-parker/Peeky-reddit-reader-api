@@ -3,6 +3,8 @@ module Api
     class ArticlesController < ApplicationController
       def index
 
+        fetch_reddit_data
+
           @reddit_data = Article.all
 
           render json: {

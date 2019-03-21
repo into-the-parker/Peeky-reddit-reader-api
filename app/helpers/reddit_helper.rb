@@ -28,7 +28,7 @@ module RedditHelper
 
   def save_to_db(articles)
 
-    for i in 0..24 do
+    for i in 0..articles.length do
     Article.create(
       subreddit: articles["data"]["children"][i]["data"]["subreddit"],
       title: articles["data"]["children"][i]["data"]["title"],
