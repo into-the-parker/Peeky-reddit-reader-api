@@ -3,9 +3,7 @@ module Api
     class ArticlesController < ApplicationController
       def index
 
-        fetch_reddit_data
-
-          @reddit_data = Article.all
+          @reddit_data = Article.order('created_at DESC')
 
           render json: {
             data: @reddit_data

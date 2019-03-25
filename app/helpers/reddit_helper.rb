@@ -11,15 +11,13 @@ module RedditHelper
 
     articles = JSON.parse(response)
 
+    puts articles
+
     content_check(articles)
 
   end
 
     def content_check(articles)
-
-      if articles.length < 1
-        fetch_reddit_data()
-      end
 
       save_to_db(articles)
 
@@ -28,15 +26,28 @@ module RedditHelper
 
   def save_to_db(articles)
 
-    for i in 0..articles.length do
-    Article.create(
-      subreddit: articles["data"]["children"][i]["data"]["subreddit"],
-      title: articles["data"]["children"][i]["data"]["title"],
-      url: articles["data"]["children"][i]["data"]["url"],
-      viewcount: articles["data"]["children"][i]["data"]["view_count"],
-      thumbnail: articles["data"]["children"][i]["data"]["thumbnail"],
-      redditlink: articles["data"]["children"][i]["data"]["permalink"]
-     )
+    for i in 0..articles["data"]["children"].length-1 do
+
+      subreddit = articles["data"]["children"][i]["data"]["subreddit"].titleize
+      title = articles["data"]["children"][i]["data"]["title"]
+      url = articles["data"]["children"][i]["data"]["url"]
+      viewcount = articles["data"]["children"][i]["data"]["ups"]
+      thumbnail = articles["data"]["children"][i]["data"]["thumbnail"]
+      redditlink = articles["data"]["children"][i]["data"]["permalink"]
+
+      if !Article.exists?(title: title)
+
+          Article.create(
+            subreddit: subreddit,
+            title: title,
+            url: url,
+            viewcount: viewcount,
+            thumbnail: thumbnail,
+            redditlink: redditlink,
+            isGif: false
+           )
+
+      end
    end
 
  end
