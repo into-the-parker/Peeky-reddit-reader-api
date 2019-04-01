@@ -7,11 +7,13 @@ module Api
         user = User.create(email: params[:user][:email], username: params[:user][:username], password: params[:user][:password])
           if user.save
           render json: {
+            message: "Success",
             data: user
           }
           else
-          render json: {
-            data: "failed"
+            render json: {
+             message: "Failed",
+             data: "Please try again"
           }
         end
       end

@@ -5,14 +5,16 @@ module Api
       def find
         user = User.find_by(email: params[:session][:email])
         if user && user.authenticate(params[:session][:password])
-        render json: {
-          data: user
-        }
-      else
-        render json: {
-          data: "failed"
-      }
-      end
+          render json: {
+            message: "Success",
+            data: user
+          }
+          else
+            render json: {
+             message: "Failed",
+             data: "Please try again"
+          }
+        end
       end
 
     end
