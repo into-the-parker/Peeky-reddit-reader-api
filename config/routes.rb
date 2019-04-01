@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :articles, :users, :sessions
       post 'login' => 'sessions#find'
       post 'users' => 'users#create'
+      post 'user_token' => 'user_token#create'
+      post 'find_user' => 'users#find'
     end
   end
 end
