@@ -18,16 +18,16 @@ module Api
      end
 
      def create_read_later
-       @read_later = ReadLater.find_or_create_by(reddit_link: params[:data][:article])
+       @read_later = ReadLater.find_by(reddit_link: params[:data][:article])
 
-       if @read_later
-       render json:{
-         data: "saved already"
-         }
-       else
-         @read_later.save
+       if !@read_later
+         ReadLater.create(reddit_link: params[:data][:article])
          render json:{
            data: "success"
+           }
+       else
+         render json:{
+           data: "saved already"
            }
        end
 
@@ -41,7 +41,7 @@ module Api
          data: "success"
          }
      end
-     
+
    end
    end
  end
