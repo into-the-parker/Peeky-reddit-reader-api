@@ -14,7 +14,7 @@ namespace :reddit_api_call do
       response = Net::HTTP.get(uri)
 
       articles = JSON.parse(response)
-      puts articles
+      
       save_to_db(articles)
 
     end
